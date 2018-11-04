@@ -21,13 +21,23 @@ class Header extends Component {
     }, 100);
   }
 
-  toggleDrawer = (open) => () => {
+  toggleDrawer = () => {
     this.setState({
-      drawerIsOpened: open
+      drawerIsOpened: !this.state.drawerIsOpened
     });
   };
 
+  isHomepage = () => {
+    let pathname = window.location.pathname;
+    let pathnameArray = pathname.split('/');
+    if (pathnameArray[2]) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
+    this.isHomepage();
     return (
       <div id="page-header">
         <nav>
@@ -37,15 +47,20 @@ class Header extends Component {
           <div className="opened-module-title">
             {this.state.title}
           </div>
-          <Button className="menu-toggle" onClick={this.toggleDrawer()}>
-            <SettingsIcon aria-label="Settings"/>
-          </Button>
+          {this.isHomepage() && (
+            <Button className="menu-toggle" onClick={this.toggleDrawer}>
+              <SettingsIcon aria-label="Settings"/>
+            </Button>
+          )}
         </nav>
         <Drawer
           anchor="right"
-          open={this.state.drawerIsOpened}
-          onClose={this.toggleDrawer(false)}>
-            <SlideFilters config={this.props.config} onChanges={this.props.onChanges}/>
+          open={this.state.drawerIsOpened}>
+            <SlideFilters 
+              config={this.props.config} 
+              onChanges={this.props.onChanges}
+              onClose={this.toggleDrawer}
+            />
         </Drawer>
       </div>
     );

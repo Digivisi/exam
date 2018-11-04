@@ -1,11 +1,14 @@
 export const appConfig = {
-  getYoutubeEndPoint : (url: string) => `https://www.googleapis.com/youtube/v3/${url}`,
+  getYoutubeEndPoint : () => 'https://www.googleapis.com/youtube/v3/',
   getYoutubeEmbdedUrl: (id: string) => `https://www.youtube.com/embed/${id}??autoplay=1`,
   youtubeApiKey      : 'AIzaSyBjc5y0vN8NvfLYVeqBpMIQqylh4tCPTYM',
-  partsToLoad        : 'snippet, statistics',
+  videoPartsToLoad   : 'snippet,statistics',
+  categoryPartsToLoad   : 'snippet',
   chart              : 'mostPopular',
-  defaultRegion      : 'US',
-  defaultCategoryId  : 10,
+  defaultRegion      : localStorage.countryCode ? 
+    localStorage.countryCode : 'US',
+  defaultCategoryId  : localStorage.categoryId ?
+    localStorage.categoryId : 10,
   maxVideosToLoad    : 24,
   countryList        : [
     {name: 'Afghanistan', code: 'AF'},
